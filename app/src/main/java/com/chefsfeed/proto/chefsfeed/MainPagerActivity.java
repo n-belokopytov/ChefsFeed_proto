@@ -11,8 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -22,9 +25,10 @@ public class MainPagerActivity extends ActionBarActivity implements View.OnClick
     private static final int ANIMATION_DURATION = 300;
     private ViewPager mViewPager;
     private FragmentStatePagerAdapter mCFViewPagerAdapter;
-    private Button mDrawerButton;
+    private ImageButton mDrawerButton;
     private RelativeLayout mFadeLayout;
     private LinearLayout mDrawer;
+    private boolean mInit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,18 @@ public class MainPagerActivity extends ActionBarActivity implements View.OnClick
 
         });
 
+        mDrawer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if(!mInit) {
+                    mDrawer.setTranslationY(mDrawer.getHeight());
+                    mDrawer.setVisibility(View.GONE);
+                    mInit = true;
+                }
+            }
+        });
 
-        mDrawerButton = (Button) findViewById(R.id.drawer_button_on);
+        mDrawerButton = (ImageButton) findViewById(R.id.drawer_button_on);
         mDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,8 +81,8 @@ public class MainPagerActivity extends ActionBarActivity implements View.OnClick
                     colorAnimation.reverse();
 
                 } else {
+                    Log.d(getClass().getSimpleName(), "second " + mDrawer.getTranslationY());
                     mDrawer.setVisibility(View.VISIBLE);
-                    mDrawer.setTranslationY(mDrawer.getHeight());
                     mDrawer.animate().translationY(0).setDuration(ANIMATION_DURATION);
                     colorAnimation.start();
                 }
@@ -82,7 +96,6 @@ public class MainPagerActivity extends ActionBarActivity implements View.OnClick
         mCFViewPagerAdapter = new ScenePagerAdapter();
         mViewPager.setAdapter(mCFViewPagerAdapter);
     }
-
 
     @Override
     public void onClick(View v) {

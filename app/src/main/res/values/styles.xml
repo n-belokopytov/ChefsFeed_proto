@@ -5,4 +5,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="RoundButton" parent="@android:style/Widget.Button">
+        <item name="android:tint">@android:color/black</item>
+        <item name="android:background">@drawable/oval</item>
+        <item name="android:elevation">@dimen/button_elevation</item>
+        <item name="android:textColor">@color/almost_white</item>
+        <item name="android:layout_width">@dimen/radius</item>
+        <item name="android:layout_height">@dimen/radius</item>
+    </style>
 </resources>
