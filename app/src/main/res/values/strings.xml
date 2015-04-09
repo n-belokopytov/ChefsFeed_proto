@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">ChefsFeed</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="scene_button">Scene</string>
-    <string name="profile_button">Profile</string>
-    <string name="saved_button">Saved</string>
-    <string name="search_button">Search</string>
-</resources>
